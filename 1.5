@@ -1,0 +1,39 @@
+$ docker run ubuntu sh -c 'echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website;'
+Input website:
+Searching..
+sh: 1: curl: not found
+
+$ docker run --sig-proxy=false -it ubuntu
+root@9f5757f4907c:/# exit
+exit
+
+$ docker start 9f
+9f
+
+$ docker exec -it 9f bash
+root@9f5757f4907c:/# sh -c 'echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website;'
+Input website:
+helsinki.fi
+Searching..
+sh: 1: curl: not found
+root@9f5757f4907c:/# exit
+exit
+
+$ docker exec 9f apt-get update
+
+$ docker exec 9f apt-get install -y curl wget
+
+$ docker exec -it 9f bash
+root@9f5757f4907c:/# sh -c 'echo "Input website:"; read website; echo "Searching.."; sleep 1; curl http://$website;'
+Input website:
+helsinki.fi
+Searching..
+<!DOCTYPE HTML PUBLIC "-//IETF//DTD HTML 2.0//EN">
+<html><head>
+<title>301 Moved Permanently</title>
+</head><body>
+<h1>Moved Permanently</h1>
+<p>The document has moved <a href="http://www.helsinki.fi/">here</a>.</p>
+</body></html>
+root@9f5757f4907c:/# exit
+exit
